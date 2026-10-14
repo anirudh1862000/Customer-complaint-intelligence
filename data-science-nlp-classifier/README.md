@@ -1,53 +1,63 @@
-# Reproducible NLP Classifier
+# Data Scientist Portfolio: Complaint Classification
 
-This folder adds a runnable, traditional machine-learning baseline to the complaint-intelligence portfolio project. It uses TF-IDF features and a class-weighted Logistic Regression model to predict a complaint's **Product** category from its narrative.
+This project demonstrates a reproducible supervised-learning workflow using publicly available consumer complaint data from the U.S. Consumer Financial Protection Bureau (CFPB).
 
-## Why this is relevant to Data Scientist roles
+## Choose the dataset mode
 
-- Text preprocessing and feature engineering
-- Supervised classification with scikit-learn pipelines
-- Stratified holdout validation
-- Accuracy, macro-F1, weighted-F1, class-level precision/recall/F1
-- Confusion-matrix analysis and serialized model artifacts
-- Reproducible command-line workflow
+### A. Current CFPB export — structured classification
 
-## Run locally
+Recent CFPB release notes say complaint narratives were removed from the database in September 2026. For a current export, use `src/train_structured_classifier.py` to predict the `Product` category from available structured fields such as `Issue`, `Sub-product`, `Submitted via`, and response fields. The script skips feature columns that are absent from your export.
 
-1. Create a virtual environment and install dependencies:
+1. Visit the [official CFPB Consumer Complaint Database](https://www.consumerfinance.gov/data-research/consumer-complaints/).
+2. Download a filtered CSV export. Keep the export at or below the current download limit and save it locally as `data/complaints.csv`.
+3. Install dependencies from this folder's `requirements.txt`.
+4. Run:
 
    ```bash
-   python -m venv .venv
-   # Windows: .venv\\Scripts\\activate
-   # macOS/Linux: source .venv/bin/activate
-   pip install -r requirements.txt
+   python src/train_structured_classifier.py --data data/complaints.csv
    ```
 
-2. Obtain a permitted copy of the Consumer Financial Protection Bureau (CFPB) consumer complaints dataset. The source data is not included in this repository because it can be large and may contain sensitive narrative text. Review the source's terms and privacy guidance before use.
-
-3. Run the model. Adjust the column names if your CSV uses different headers:
+   If the CSV has different headers, use `--target` and `--features`, for example:
 
    ```bash
-   python src/train_classifier.py --data data/complaints.csv
+   python src/train_structured_classifier.py --data data/complaints.csv --target Product --features "Issue,Sub-product,Submitted via"
    ```
 
-   Example with alternative headers:
+### B. Historical dataset containing complaint narratives — NLP classification
 
-   ```bash
-   python src/train_classifier.py --data data/complaints.csv --text-column narrative --label-column product
-   ```
+If you have a lawful historical dataset that includes narrative text, run `src/train_classifier.py`:
 
-4. Inspect the generated `artifacts/` directory:
-   - `metrics.json` — holdout metrics and class-level report
-   - `confusion_matrix.csv` — true versus predicted class counts
-   - `complaint_classifier.joblib` — fitted scikit-learn pipeline
+```bash
+python src/train_classifier.py --data data/historical_complaints.csv
+```
 
-## Modeling decisions and caveats
+Use the `--text-column` and `--label-column` options if its headers differ. Do not assume a current CFPB export contains narrative text.
 
-- The script removes empty narratives and labels and excludes classes with fewer than two examples before stratified splitting.
-- TF-IDF uses unigrams and bigrams; Logistic Regression uses class weights to help with imbalance.
-- Macro-F1 gives each class equal weight and should be reviewed alongside per-class recall, not just accuracy.
-- A single random split is a baseline, not proof of generalization. For a stronger study, compare against a majority-class baseline, tune hyperparameters on validation data, and preserve a final untouched test set.
-- Complaint text can contain personal or financial information. Do not commit raw complaint records or trained artifacts derived from restricted data.
-- This is decision support for human triage, not an autonomous system for customer-impacting decisions.
+## Outputs
 
-**No performance score is claimed here.** Run the pipeline on a verified dataset and report the resulting metrics only after checking data leakage, class balance, and error patterns.
+The scripts save local artifacts (not committed by default):
+- `metrics.json` — accuracy, macro-F1, weighted-F1, and per-class precision/recall/F1
+- `confusion_matrix.csv` — true versus predicted class counts
+- `*.joblib` — fitted scikit-learn pipeline
+
+## Skills demonstrated
+
+- Data cleaning and missing-value handling
+- Feature engineering / text vectorization
+- scikit-learn pipelines and categorical encoding
+- Stratified train/test evaluation
+- Model evaluation with class-level metrics and confusion matrices
+- Reproducible command-line ML workflow
+
+## Critical evaluation notes
+
+- Predicting Product from Issue/Sub-product can be an easy task because the fields are related by how the complaint form is designed. Explain this limitation in interviews and compare against a simple majority-class baseline.
+- Review macro-F1 and per-class recall, not just accuracy. If data spans time, consider a time-based holdout to test temporal generalization.
+- Keep raw complaint records and generated model artifacts out of Git unless you have reviewed licensing, privacy, and repository size.
+- This is an exploratory portfolio model, not a production decision system.
+- **No model score is claimed until you run the script on the exact dataset and inspect the outputs.**
+
+## Source
+
+- [CFPB Consumer Complaint Database](https://www.consumerfinance.gov/data-research/consumer-complaints/)
+- [CFPB API documentation and release notes](https://cfpb.github.io/api/ccdb/)
