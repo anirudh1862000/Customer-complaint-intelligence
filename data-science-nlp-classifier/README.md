@@ -1,59 +1,75 @@
 # Data Scientist Portfolio: Complaint Classification
 
-This project demonstrates a reproducible supervised-learning workflow using publicly available consumer complaint data from the U.S. Consumer Financial Protection Bureau (CFPB).
+This project demonstrates a reproducible supervised-learning workflow using consumer complaint data from the U.S. Consumer Financial Protection Bureau (CFPB).
 
-## Choose the dataset mode
+## Start with your large CSV: create a compact portfolio sample
 
-### A. Current CFPB export — structured classification
+The raw upload can be very large. **Do not commit the full raw export to GitHub.** Use the streaming preparation script to keep only structured modeling columns, exclude complaint IDs and free-text narratives, and create a compressed, bounded sample locally.
 
-Recent CFPB release notes say complaint narratives were removed from the database in September 2026. For a current export, use `src/train_structured_classifier.py` to predict the `Product` category from available structured fields such as `Issue`, `Sub-product`, `Submitted via`, and response fields. The script skips feature columns that are absent from your export.
+From this directory, install dependencies:
 
-1. Visit the [official CFPB Consumer Complaint Database](https://www.consumerfinance.gov/data-research/consumer-complaints/).
-2. Download a filtered CSV export. Keep the export at or below the current download limit and save it locally as `data/complaints.csv`.
-3. Install dependencies from this folder's `requirements.txt`.
-4. Run:
+```bash
+pip install -r requirements.txt
+```
 
-   ```bash
-   python src/train_structured_classifier.py --data data/complaints.csv
-   ```
+Then run:
 
-   If the CSV has different headers, use `--target` and `--features`, for example:
+```bash
+python src/prepare_portfolio_sample.py --input /path/to/complaints.csv --output data/portfolio_sample.csv.gz --max-per-class 1500
+```
 
-   ```bash
-   python src/train_structured_classifier.py --data data/complaints.csv --target Product --features "Issue,Sub-product,Submitted via"
-   ```
+The script reads the source in chunks, so it does not load the entire CSV into memory. It writes:
+- `data/portfolio_sample.csv.gz` — compact gzip-compressed dataset with a maximum of 1,500 rows per Product class before duplicate removal
+- `data/portfolio_sample.csv.gz.metadata.json` — row counts, columns, and class distribution
 
-### B. Historical dataset containing complaint narratives — NLP classification
+The script uses available columns from `Issue`, `Sub-product`, `Submitted via`, `Company response to consumer`, `Timely response?`, and `Consumer disputed?`, with `Product` as the target. It does not include narrative text, complaint identifiers, company names, or location fields. **Inspect the generated sample before sharing it publicly.** The raw source file remains local.
 
-If you have a lawful historical dataset that includes narrative text, run `src/train_classifier.py`:
+## Train a model using a current structured export
+
+Run:
+
+```bash
+python src/train_structured_classifier.py --data data/portfolio_sample.csv.gz
+```
+
+The model predicts `Product` from the structured fields available in the sample.
+
+If the headers differ, specify them explicitly:
+
+```bash
+python src/train_structured_classifier.py --data data/portfolio_sample.csv.gz --target Product --features "Issue,Sub-product,Submitted via"
+```
+
+## Historical dataset containing complaint narratives — NLP classification
+
+If you have a lawful historical dataset that includes complaint narrative text, run:
 
 ```bash
 python src/train_classifier.py --data data/historical_complaints.csv
 ```
 
-Use the `--text-column` and `--label-column` options if its headers differ. Do not assume a current CFPB export contains narrative text.
+Use `--text-column` and `--label-column` if the headers differ. Do not assume a current CFPB export contains narrative text.
 
 ## Outputs
 
-The scripts save local artifacts (not committed by default):
+Training scripts save local artifacts (not committed by default):
 - `metrics.json` — accuracy, macro-F1, weighted-F1, and per-class precision/recall/F1
 - `confusion_matrix.csv` — true versus predicted class counts
 - `*.joblib` — fitted scikit-learn pipeline
 
 ## Skills demonstrated
 
-- Data cleaning and missing-value handling
-- Feature engineering / text vectorization
-- scikit-learn pipelines and categorical encoding
-- Stratified train/test evaluation
-- Model evaluation with class-level metrics and confusion matrices
-- Reproducible command-line ML workflow
+- Chunked data processing and data quality checks
+- Missing-value handling and categorical feature preparation
+- Feature engineering and NLP vectorization (historical narrative mode)
+- scikit-learn pipelines and supervised classification
+- Class-level metrics, confusion matrices, and reproducible CLI workflows
 
 ## Critical evaluation notes
 
-- Predicting Product from Issue/Sub-product can be an easy task because the fields are related by how the complaint form is designed. Explain this limitation in interviews and compare against a simple majority-class baseline.
-- Review macro-F1 and per-class recall, not just accuracy. If data spans time, consider a time-based holdout to test temporal generalization.
-- Keep raw complaint records and generated model artifacts out of Git unless you have reviewed licensing, privacy, and repository size.
+- Predicting Product from Issue/Sub-product can be an easy task because the fields are related by how the complaint form is designed. Compare against a majority-class baseline and explain this limitation in interviews.
+- Review macro-F1 and per-class recall, not just accuracy. If records span time, consider a time-based holdout to test temporal generalization.
+- Keep the raw export and generated model artifacts out of Git unless licensing, privacy, and repository size have been reviewed.
 - This is an exploratory portfolio model, not a production decision system.
 - **No model score is claimed until you run the script on the exact dataset and inspect the outputs.**
 
