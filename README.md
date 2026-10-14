@@ -56,7 +56,7 @@ The notebook references the CFPB consumer complaints data and a Kaggle path at `
 
 ## Reproducible Data Scientist Project
 
-The [`data-science-nlp-classifier/`](data-science-nlp-classifier/README.md) folder contains two runnable baselines: a structured-field classifier for current CFPB exports and an NLP classifier for historical datasets that include complaint narratives. CFPB release notes indicate narratives were removed in September 2026, so verify the fields in your download before choosing a mode. The model has not been evaluated on your own dataset here; report performance scores only after running and validating the outputs.
+The [`data-science-nlp-classifier/`](data-science-nlp-classifier/README.md) folder contains a dataset-free synthetic NLP demo, a structured-field classifier for current CFPB exports, and an NLP classifier for historical datasets that include complaint narratives. To run the demo, install `data-science-nlp-classifier/requirements.txt` and execute `python src/run_synthetic_demo.py` from that folder. The synthetic records are fictional and its metrics are not real-world performance. CFPB release notes indicate narratives were removed in September 2026, so verify the fields in your download before choosing a mode. The model has not been evaluated on your own dataset here; report performance scores only after running and validating the outputs.
 
 ## Potential Extensions
 
