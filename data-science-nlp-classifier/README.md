@@ -67,6 +67,16 @@ python src/train_classifier.py --data data/historical_complaints.csv
 
 Use `--text-column` and `--label-column` if the headers differ. Do not assume a current CFPB export contains narrative text.
 
+
+
+## Business-analysis deliverables
+
+- [Business case study and validation checklist](CASE_STUDY.md)
+- [SQL analyst query pack](sql/analyst_queries.sql) — data quality, product mix, monthly trends, response timeliness, and issue changes
+- [Power BI dashboard specification](powerbi/dashboard_specification.md) — report pages, KPI definitions, and starter DAX measures
+
+These are implementation-ready templates, not completed real-data findings. Load a permitted real export, run the queries, reconcile the Power BI measures, and document verified findings before presenting the project as a completed analysis.
+
 ## Outputs
 
 Training scripts save local artifacts (not committed by default):
