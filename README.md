@@ -1,53 +1,64 @@
-# Banking Consumer Complaint Analysis
+# Customer Complaint Intelligence
 
-## Project Overview
-This project analyzes consumer complaints in financial services and builds NLP classification models to route complaints automatically by category.
+A text-analytics project exploring consumer financial-services complaints and workflows for classifying complaint narratives into product or issue categories.
 
-Notebook: `banking-consumer-complaint-analysis.ipynb`
+> **Portfolio focus:** NLP, text preprocessing, exploratory analysis, classification baselines, and model evaluation.
 
-## Problem Statement
-Manual complaint triage is slow and hard to scale.  
-The notebook builds machine learning pipelines to classify complaint text into:
-- `Product` category (Model M1)
-- `Issue` category (Model M2 concept and supporting analysis)
+## Business Problem
 
-## Dataset
-Data source referenced in notebook:
-- CFPB consumer complaints database
-- Kaggle path used: `/kaggle/input/complaintsfull/main.csv`
+Manually routing customer complaints can be time-consuming and inconsistent at scale. This project investigates how complaint text and existing category labels could support an assisted triage workflow.
 
-Key fields include:
-- `consumer complaint narrative`
-- `product`, `sub-product`
-- `issue`, `sub-issue`
-- `date received` and related timeline fields
+## Questions Explored
 
-## Notebook Workflow
-- Business background and motivation for automated complaint handling
-- Data preprocessing and subset normalization
-- Class distribution analysis and imbalance handling
-- Exploratory analysis over time and categories
-- Data preparation for text classification
-- Baseline linear model (`LogisticRegression`) for complaint classification
-- Transformer-based pipeline (DistilBERT feature extraction and fine-tuned modeling)
-- Evaluation using confusion matrix and validation metrics
+- How do complaint volumes vary by product, issue, and time?
+- Which complaint categories are represented most heavily?
+- How can narrative text be prepared for supervised classification?
+- How does a traditional machine-learning baseline compare with a transformer-based approach?
+- Which evaluation measures help reveal class-level errors and potential routing risks?
 
-## Tech Stack
-- Python
-- Pandas, NumPy
-- Plotly
-- scikit-learn
-- PyTorch
-- Transformers (DistilBERT)
-- Optional: `kaleido` for Plotly static export
+## Workflow
 
-## How to Run
-1. Open `banking-consumer-complaint-analysis.ipynb`.
-2. Install required dependencies (notebook includes `pip install -U kaleido`).
-3. Ensure dataset path is available or update file paths for local execution.
-4. Run cells in order; transformer sections may require GPU for faster execution.
+1. **Explore the data** — inspect complaint records, dates, labels, and class distributions.
+2. **Prepare text** — clean and normalize relevant fields and construct modeling subsets.
+3. **Establish a baseline** — use a scikit-learn `LogisticRegression` classifier.
+4. **Explore transformer modeling** — use DistilBERT-related feature extraction or fine-tuning steps present in the notebook.
+5. **Evaluate** — review confusion matrices and validation metrics to understand strengths and error patterns.
 
-## Outputs
-- EDA visuals and class distribution insights
-- Baseline and transformer model performance comparison
-- Practical foundation for automated complaint-ticket routing
+## Tools & Skills
+
+- **Python:** Pandas, NumPy
+- **Visualization:** Plotly
+- **Traditional ML:** scikit-learn, Logistic Regression
+- **NLP / deep learning:** PyTorch, Hugging Face Transformers, DistilBERT
+- **Analytics methods:** text preprocessing, class-distribution analysis, supervised classification, model evaluation
+
+## Repository Contents
+
+- `banking-consumer-complaint-analysis.ipynb` — analysis, preprocessing, and modeling workflow
+
+## Run the Notebook
+
+1. Clone or download the repository.
+2. Open the notebook in Jupyter or Google Colab.
+3. Install the libraries required by the notebook, including `pandas`, `numpy`, `plotly`, `scikit-learn`, `torch`, and `transformers`.
+4. Download or access the source data and update the notebook's dataset path.
+5. Run the notebook in sequence. Transformer steps may require substantial memory and can run faster on a GPU.
+
+The notebook references the CFPB consumer complaints data and a Kaggle path at `/kaggle/input/complaintsfull/main.csv`. Confirm dataset access and licensing before redistribution.
+
+## Evaluation & Responsible Use
+
+- Review class-level precision, recall, F1-score, and confusion matrices before considering operational use.
+- Complaint categories can be imbalanced; aggregate accuracy alone may hide poor performance on less common categories.
+- Automated predictions should support human review, not make final customer-impacting decisions without appropriate safeguards.
+- Check the notebook for the actual validation setup and measured results; this README does not claim unverified scores or business impact.
+
+## Potential Extensions
+
+- Add a reproducible train/validation/test strategy and compare all models on the same split.
+- Document class-level metrics and common misclassification patterns.
+- Add a lightweight inference example with clear limitations.
+- Include privacy-conscious examples and avoid committing sensitive complaint narratives.
+
+---
+Created as a portfolio project exploring NLP-assisted complaint classification.
