@@ -35,6 +35,7 @@ Manually routing customer complaints can be time-consuming and inconsistent at s
 ## Repository Contents
 
 - `banking-consumer-complaint-analysis.ipynb` — analysis, preprocessing, and modeling workflow
+- [`data-science-nlp-classifier/`](data-science-nlp-classifier/README.md) — reproducible TF-IDF + Logistic Regression baseline with holdout metrics, class-level evaluation, confusion matrix, and saved model
 
 ## Run the Notebook
 
@@ -52,6 +53,10 @@ The notebook references the CFPB consumer complaints data and a Kaggle path at `
 - Complaint categories can be imbalanced; aggregate accuracy alone may hide poor performance on less common categories.
 - Automated predictions should support human review, not make final customer-impacting decisions without appropriate safeguards.
 - Check the notebook for the actual validation setup and measured results; this README does not claim unverified scores or business impact.
+
+## Reproducible Data Scientist Project
+
+A command-line NLP classification baseline is available in [`data-science-nlp-classifier/`](data-science-nlp-classifier/README.md). It is designed to run on a locally obtained, permitted CFPB complaints CSV. The script and instructions are committed, but the model has not been run against your local dataset here; do not claim specific model scores until you run it and verify the outputs.
 
 ## Potential Extensions
 
