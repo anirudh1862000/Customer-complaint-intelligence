@@ -1,0 +1,8 @@
+# Keep CFPB exports and generated data out of GitHub
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+.venv/
+__pycache__/
+*.pyc
