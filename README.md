@@ -18,6 +18,9 @@ Manually routing customer complaints can be time-consuming and inconsistent at s
 
 ## Repository Projects
 
+### 0. Data Science — Retail Customer Intelligence
+- [**Retail Customer Segmentation & Sales Forecasting**](data-science-project/README.md) — RFM feature engineering, K-Means segmentation, SARIMA forecasting, and time-based model evaluation.
+
 ### 1. NLP / Data Science
 - `banking-consumer-complaint-analysis.ipynb` — exploratory analysis, preprocessing, and modeling.
 - [`data-science-nlp-classifier/`](data-science-nlp-classifier/README.md) — structured complaint classifier and NLP experiments.
