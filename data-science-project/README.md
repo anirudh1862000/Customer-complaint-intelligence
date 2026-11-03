@@ -117,5 +117,55 @@ Use only after you execute the project and confirm the results:
 
 > Built a retail customer analytics pipeline in Python, engineered RFM features and segmented customers with K-Means; evaluated monthly sales forecasts against a seasonal baseline using chronological validation and MAE/RMSE.
 
+
+## Advanced analytics (extended project)
+
+After the base pipeline completes, run the second-stage analytics:
+
+```bash
+python src/advanced_analysis.py --input data/processed/clean_transactions.csv --output reports
+``
+
+This adds:
+- **Cohort retention:** monthly acquisition cohorts, repeat-customer counts, and retention percentages.
+- **Customer value analysis:** historical revenue, order count, average order value, active days, and revenue per active day. These are descriptive measures, not predicted CLV.
+- **Product and country performance:** revenue, units, invoices, and customer coverage.
+- **Basket affinity:** bounded invoice-level product co-occurrence pairs to support cross-sell hypotheses.
+- **Anomaly detection:** Isolation Forest flags unusual monthly revenue/order/volume patterns for investigation; flags are not proof of fraud or business issues.
+- **Charts and executive summary:** PNG charts and `reports/executive_summary.json`.
+
+### Optional API
+
+Install dependencies and start the read-only API from this project directory:
+
+```bash
+uvicorn src.api:app --reload
+``
+
+Open `http://127.0.0.1:8000/docs` for interactive API documentation. Endpoints include `/health`, `/summary`, `/customers/top`, `/products/top`, `/countries`, `/cohorts`, and `/anomalies`. Run the advanced analytics step first to populate the reports.
+
+### Tests and CI
+
+Run unit tests:
+
+```bash
+pytest -q
+``
+
+A GitHub Actions workflow runs the tests when files under `data-science-project/` change. A Dockerfile is included for containerizing the API.
+
+### Output files from advanced analytics
+
+- `reports/cohort_retention.csv`
+- `reports/customer_value_metrics.csv`
+- `reports/product_performance.csv`
+- `reports/country_performance.csv`
+- `reports/basket_affinity.csv`
+- `reports/monthly_anomalies.csv`
+- `reports/executive_summary.json`
+- `reports/cohort_retention.png`, `top_products.png`, `country_revenue.png`, `monthly_anomalies.png`
+
+**Reproducibility note:** the raw UCI workbook is not committed. Download it using the setup instructions, run both pipeline stages, and review the generated outputs before quoting any metrics in a resume or interview.
+
 ## Dataset citation
 Chen, D. (2012). *Online Retail II*. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D
