@@ -1,101 +1,121 @@
 # Retail Customer Intelligence: Segmentation & Sales Forecasting
 
-**Data Science portfolio project | Python · Machine Learning · Time Series**
+An end-to-end **Data Science portfolio project** using real retail transaction data. It combines customer analytics, unsupervised learning, time-series forecasting, and business recommendations.
 
-Build a business-facing data science workflow from a real retail transactions dataset: customer segmentation with RFM features and unsupervised learning, plus monthly sales forecasting with time-aware validation.
+> **Project status:** Code and notebook are uploaded. Run locally against the UCI dataset to generate results. No performance numbers are claimed until the pipeline is executed and reviewed.
 
-## Why this project?
-
-This project demonstrates more than dashboarding:
-- Transaction-level data cleaning and exploratory data analysis
-- Customer-level feature engineering (Recency, Frequency, Monetary value)
-- Unsupervised learning with K-Means and cluster profiling
-- Time-series forecasting with a seasonal naive baseline and SARIMA
-- Time-based train/test evaluation and business recommendations
+## Business questions
+1. Which customers are most valuable, active, or at risk of lapsing?
+2. Can customers be grouped into actionable segments using RFM behavior?
+3. How well can monthly revenue be forecast versus a seasonal-naive baseline?
+4. What actions could marketing and commercial teams take for each segment?
 
 ## Dataset
+**UCI Online Retail II** — 1,067,371 transaction records from a UK-based online retailer, Dec 2009–Dec 2011.
 
-**UCI Online Retail II**: https://archive.ics.uci.edu/dataset/502/online+retail+ii
+- Dataset page: https://archive.ics.uci.edu/dataset/502/online+retail+ii
+- Direct workbook: https://archive.ics.uci.edu/ml/machine-learning-databases/00502/online_retail_II.xlsx
+- Citation: Chen, D. (2012). *Online Retail II*. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D
+- License: CC BY 4.0. Attribute the dataset when reusing or sharing derived work.
 
-The dataset contains online retail transactions from a UK-based retailer. It includes invoice, product, quantity, transaction date, unit price, customer ID, and country fields. Download the Excel file from UCI and place it at:
-
-`data/raw/online_retail_II.xlsx`
-
-Do not commit the raw dataset to GitHub. See UCI's dataset page for citation and usage information.
+The workbook is about 43.5 MB. **Do not commit the raw data** to GitHub.
 
 ## Project structure
-
 ```
 data-science-project/
-├── data/
-│   ├── raw/                 # Downloaded dataset (not committed)
-│   └── processed/           # Generated output (not committed)
+├── data/raw/                 # Dataset (gitignored)
+├── data/processed/           # Generated outputs (gitignored)
+├── reports/                  # Plots and reports (gitignored)
 ├── notebooks/
-│   └── (add EDA/modeling notebook after running pipeline)
+│   └── retail_customer_intelligence.ipynb
 ├── src/
-│   └── run_analysis.py      # Cleaning, RFM, clustering, forecasting
-├── reports/
-│   └── (add charts and findings after execution)
+│   └── run_analysis.py       # Reproducible pipeline
 ├── requirements.txt
 └── README.md
 ```
 
-## Run locally
+## Setup and run (Windows PowerShell)
+Run these commands from the repository root:
 
-```bash
+```powershell
+cd data-science-project
 python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
 pip install -r requirements.txt
+New-Item -ItemType Directory -Force data\raw, data\processed, reports
+Invoke-WebRequest "https://archive.ics.uci.edu/ml/machine-learning-databases/00502/online_retail_II.xlsx" -OutFile "data\raw\online_retail_II.xlsx"
 python src/run_analysis.py --input data/raw/online_retail_II.xlsx --output data/processed
+jupyter notebook notebooks/retail_customer_intelligence.ipynb
 ```
 
-The script writes cleaned transactions, customer RFM features, customer cluster labels, monthly sales, and forecast results to the output folder.
+## Setup and run (macOS/Linux)
+```bash
+cd data-science-project
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+mkdir -p data/raw data/processed reports
+curl -L "https://archive.ics.uci.edu/ml/machine-learning-databases/00502/online_retail_II.xlsx" -o data/raw/online_retail_II.xlsx
+python src/run_analysis.py --input data/raw/online_retail_II.xlsx --output data/processed
+jupyter notebook notebooks/retail_customer_intelligence.ipynb
+```
 
 ## Methodology
+### Data preparation
+- Parse timestamps and numeric fields; normalize column names.
+- Remove cancellation invoices (invoice IDs beginning with `C`), nonpositive quantities/prices, and invalid dates.
+- Preserve customer IDs as strings; transactions without customer IDs contribute to overall revenue but are excluded from customer-level RFM.
 
-### 1. Data quality and EDA
-- Remove canceled invoices and non-positive quantities/prices.
-- Handle missing customer IDs separately for customer-level modeling.
-- Convert transaction timestamps and derive revenue.
-- Inspect country, product transaction volume, revenue, and seasonality.
+### Customer segmentation
+- Engineer **Recency, Frequency, Monetary (RFM)** features.
+- Apply log transformation and standardization to reduce skew.
+- Evaluate K-Means candidates (k=2–8, limited by customer count) using silhouette score and inertia.
+- Export cluster assignments, profiles, and selection metrics.
+- Cluster numbers are arbitrary; name segments only after inspecting actual profile values.
 
-### 2. Customer segmentation
-- Aggregate transaction records into RFM metrics:
-  - **Recency:** days since last purchase (relative to dataset snapshot date)
-  - **Frequency:** number of distinct invoices
-  - **Monetary:** total customer revenue
-- Log-transform skewed metrics and standardize them.
-- Fit K-Means for a range of cluster counts and compare inertia/silhouette scores.
-- Profile clusters using original RFM values and assign interpretable labels only after inspecting actual profiles.
-
-### 3. Sales forecasting
+### Revenue forecasting
 - Aggregate revenue by month.
-- Compare a seasonal-naive forecast against SARIMA.
-- Use a chronological holdout split; never randomly shuffle time series.
-- Report MAE, RMSE, and MAPE (with safeguards for zero actual values).
+- Use a chronological holdout (last 3–6 months depending on history).
+- Compare SARIMA with a seasonal-naive baseline.
+- Report MAE, RMSE, and MAPE on nonzero actual months. Do not randomly shuffle time-series data.
 
-## Business questions
+## Generated outputs
+- `clean_transactions.csv`
+- `customer_rfm_clusters.csv`
+- `cluster_profiles.csv`
+- `cluster_selection_metrics.csv`
+- `monthly_revenue.csv`
+- `forecast_metrics.csv`
+- `forecast_holdout.csv`
 
-- Which customers are high-value, frequent, or at risk of lapsing?
-- How concentrated is revenue across customers?
-- What seasonal patterns appear in monthly sales?
-- How does a forecasting baseline compare with SARIMA on a held-out period?
-- How could segments inform retention, campaign prioritization, or inventory planning?
+The notebook uses these outputs to generate EDA, cluster visualizations, and forecast plots.
 
-## Responsible reporting
+## Business interpretation guide
+- **High monetary + frequent + recent:** loyalty benefits and early access.
+- **High monetary + recency increasing:** personalized win-back campaign.
+- **Frequent + low monetary:** bundles and cross-sell.
+- **Low frequency + recent first purchase:** onboarding and second-purchase campaign.
+- Use forecast results to support inventory/capacity planning, not as certainty.
 
-- This dataset is historical and from a single retailer; results may not generalize to other businesses.
-- RFM clusters are descriptive groups, not ground-truth customer types.
-- Forecast accuracy depends on the evaluation period and data quality.
-- **Do not claim specific model scores or business impact until you run the pipeline and inspect the outputs.**
+## Limitations
+- Data is historical (2009–2011) and does not represent current demand.
+- RFM clusters are descriptive, not ground truth.
+- SARIMA is a baseline model; inspect residuals and compare with naive forecasts before deployment.
+- No causal claims: clustering does not prove campaign impact.
 
-## Resume bullet template (fill only after running)
+## Interview walkthrough
+1. Explain the business question and data-quality decisions.
+2. Explain RFM and why the features are interpretable.
+3. Describe cluster selection and profile-based interpretation.
+4. Explain chronological validation and why the baseline matters.
+5. Discuss limitations and next steps (cohort retention, CLV, campaign uplift, rolling-origin backtesting).
 
-"Built a retail customer analytics pipeline using Python, engineered RFM features and segmented customers with K-Means; evaluated monthly sales forecasts using chronological validation and MAE/RMSE to support retention and planning decisions."
+## Resume bullet template
+Use only after you execute the project and confirm the results:
 
-Replace this template with truthful results after you run the project.
+> Built a retail customer analytics pipeline in Python, engineered RFM features and segmented customers with K-Means; evaluated monthly sales forecasts against a seasonal baseline using chronological validation and MAE/RMSE.
 
 ## Dataset citation
-
-Chen, D. (2019). *Online Retail II*. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D
+Chen, D. (2012). *Online Retail II*. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D
