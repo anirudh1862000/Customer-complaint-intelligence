@@ -12,58 +12,42 @@ Manually routing customer complaints can be time-consuming and inconsistent at s
 
 - How do complaint volumes vary by product, issue, and time?
 - Which complaint categories are represented most heavily?
-- How can narrative text be prepared for supervised classification?
-- How does a traditional machine-learning baseline compare with a transformer-based approach?
+- How can complaint text be prepared for supervised classification?
+- How does a traditional machine-learning baseline compare with transformer-based approaches?
 - Which evaluation measures help reveal class-level errors and potential routing risks?
 
-## Workflow
+## Repository Projects
 
-1. **Explore the data** — inspect complaint records, dates, labels, and class distributions.
-2. **Prepare text** — clean and normalize relevant fields and construct modeling subsets.
-3. **Establish a baseline** — use a scikit-learn `LogisticRegression` classifier.
-4. **Explore transformer modeling** — use DistilBERT-related feature extraction or fine-tuning steps present in the notebook.
-5. **Evaluate** — review confusion matrices and validation metrics to understand strengths and error patterns.
+### 1. NLP / Data Science
+- `banking-consumer-complaint-analysis.ipynb` — exploratory analysis, preprocessing, and modeling.
+- [`data-science-nlp-classifier/`](data-science-nlp-classifier/README.md) — structured complaint classifier and NLP experiments.
+- **Note:** CFPB stopped publishing narratives in the main database in 2026. Narrative-based work should use a properly sourced historical archive and respect data-use requirements.
+
+### 2. Data Analyst / BI Analyst — Python + SQL + Power BI
+- [**CFPB Consumer Complaints Analytics Project**](portfolio-analyst-project/README.md) — a reproducible analyst workflow with Python data cleaning, SQL business queries, Power BI dashboard design and DAX measures.
 
 ## Tools & Skills
 
 - **Python:** Pandas, NumPy
-- **Visualization:** Plotly
-- **Traditional ML:** scikit-learn, Logistic Regression
+- **SQL:** CTEs, aggregation, conditional logic, date trends, window functions
+- **BI:** Power BI, DAX, KPI design, drilldowns
+- **Visualization:** Plotly / Power BI
+- **Machine Learning:** scikit-learn, Logistic Regression, model evaluation
 - **NLP / deep learning:** PyTorch, Hugging Face Transformers, DistilBERT
-- **Analytics methods:** text preprocessing, class-distribution analysis, supervised classification, model evaluation
 
-## Repository Contents
+## Data Source
 
-- `banking-consumer-complaint-analysis.ipynb` — analysis, preprocessing, and modeling workflow
-- [`data-science-nlp-classifier/`](data-science-nlp-classifier/README.md) — reproducible machine-learning project with a structured classifier for current CFPB exports and an NLP classifier for historical datasets that contain complaint narratives
+- [CFPB Consumer Complaint Database](https://www.consumerfinance.gov/data-research/consumer-complaints/)
+- [CFPB API documentation and release notes](https://cfpb.github.io/api/ccdb/)
 
-## Run the Notebook
+The CFPB dataset changes over time. The structured analytics project documents field handling and avoids committing raw complaint exports. Do not upload complaint-level data or personal information to GitHub.
 
-1. Clone or download the repository.
-2. Open the notebook in Jupyter or Google Colab.
-3. Install the libraries required by the notebook, including `pandas`, `numpy`, `plotly`, `scikit-learn`, `torch`, and `transformers`.
-4. Download or access the source data and update the notebook's dataset path.
-5. Run the notebook in sequence. Transformer steps may require substantial memory and can run faster on a GPU.
+## Responsible Use
 
-The notebook references the CFPB consumer complaints data and a Kaggle path at `/kaggle/input/complaintsfull/main.csv`. Confirm dataset access and licensing before redistribution.
-
-## Evaluation & Responsible Use
-
-- Review class-level precision, recall, F1-score, and confusion matrices before considering operational use.
-- Complaint categories can be imbalanced; aggregate accuracy alone may hide poor performance on less common categories.
-- Automated predictions should support human review, not make final customer-impacting decisions without appropriate safeguards.
-- Check the notebook for the actual validation setup and measured results; this README does not claim unverified scores or business impact.
-
-## Reproducible Data Scientist Project
-
-The [`data-science-nlp-classifier/`](data-science-nlp-classifier/README.md) folder contains a dataset-free synthetic NLP demo, a structured-field classifier for current CFPB exports, and an NLP classifier for historical datasets that include complaint narratives. To run the demo, install `data-science-nlp-classifier/requirements.txt` and execute `python src/run_synthetic_demo.py` from that folder. The synthetic records are fictional and its metrics are not real-world performance. CFPB release notes indicate narratives were removed in September 2026, so verify the fields in your download before choosing a mode. The model has not been evaluated on your own dataset here; report performance scores only after running and validating the outputs.
-
-## Potential Extensions
-
-- Add a reproducible train/validation/test strategy and compare all models on the same split.
-- Document class-level metrics and common misclassification patterns.
-- Add a lightweight inference example with clear limitations.
-- Include privacy-conscious examples and avoid committing sensitive complaint narratives.
+- CFPB complaint records are not a representative statistical sample of all consumers.
+- Company complaint counts should be considered alongside company size or market share.
+- Automated complaint classification should support human review, not make final customer-impacting decisions.
+- Report model scores only after running the code and validating results on a documented split.
 
 ---
-Created as a portfolio project exploring NLP-assisted complaint classification.
+Portfolio repository demonstrating analytics, SQL, BI reporting, and data science workflows.
