@@ -63,6 +63,10 @@ Interactive API documentation is available at `/docs` after starting the server.
 pytest -q
 ```
 
+## Verified smoke test
+
+The end-to-end Google Colab smoke test was run against the included fictional sample policy. It successfully indexed 1 document chunk and retrieved the passage answering the question `How many annual leave days are provided?` with the supported answer: **20 days per calendar year**. The run used `extractive_retrieval_fallback` because no LLM API key was configured. This verifies document ingestion, embedding/index creation, and retrieval for the sample document; it does **not** verify LLM-generated answers or production retrieval quality.
+
 ## Evaluation and limitations
 
 - Retrieval quality should be evaluated on a held-out set of questions with known supporting passages; this repository does not claim a measured retrieval or answer-quality score yet.
