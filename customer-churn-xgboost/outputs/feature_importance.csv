@@ -1,0 +1,15 @@
+feature,importance
+numeric__monthly_charges,0.14101778
+categorical__contract_type_Month-to-month,0.11793288
+numeric__tenure_months,0.11726798
+categorical__contract_type_Two year,0.116639264
+numeric__support_tickets_90d,0.09589477
+numeric__late_payments_90d,0.06666809
+categorical__payment_method_Electronic check,0.06389998
+numeric__monthly_usage_hours,0.051919382
+categorical__payment_method_Card,0.0446826
+categorical__contract_type_One year,0.04099932
+categorical__payment_method_Bank transfer,0.03816063
+categorical__payment_method_Invoice,0.036272284
+categorical__paperless_billing_No,0.03502482
+categorical__paperless_billing_Yes,0.0336202
