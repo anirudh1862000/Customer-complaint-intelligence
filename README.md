@@ -20,6 +20,9 @@ A portfolio repository demonstrating data analytics, business intelligence, mach
 
 **Important:** The fraud-risk project uses synthetic data. It demonstrates the workflow only; its metrics are not evidence of real-world fraud performance or production experience.
 
+### 5. Document RAG Question Answering — GenAI / Data Scientist
+[**Document RAG Question Answering Pipeline**](rag-question-answering/README.md) — PDF/TXT/Markdown ingestion, chunking, sentence-transformer embeddings, FAISS similarity search, optional OpenAI grounded generation, source references, and a FastAPI service. Includes a fictional sample policy and a local extractive fallback when no API key is configured.
+
 ## Skills demonstrated
 
 - **Python:** Pandas, NumPy, scikit-learn, data preparation, feature engineering
