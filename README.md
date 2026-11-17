@@ -1,56 +1,42 @@
 # Customer Complaint Intelligence
 
-A text-analytics project exploring consumer financial-services complaints and workflows for classifying complaint narratives into product or issue categories.
+A portfolio repository demonstrating data analytics, business intelligence, machine learning, and responsible AI workflows using documented public or synthetic datasets.
 
-> **Portfolio focus:** NLP, text preprocessing, exploratory analysis, classification baselines, and model evaluation.
+> **Portfolio focus:** Python, SQL, Power BI, customer analytics, supply chain, forecasting, NLP, and risk analytics. Each project documents its data source, evaluation approach, and limitations. No unverified business impact or model performance is claimed.
 
-## Business Problem
+## Featured projects
 
-Manually routing customer complaints can be time-consuming and inconsistent at scale. This project investigates how complaint text and existing category labels could support an assisted triage workflow.
+### 1. Customer complaints — Data Analyst / BI Analyst
+[**CFPB Consumer Complaints Analytics**](portfolio-analyst-project/README.md) — Python data preparation, SQL business queries, Power BI dashboard specification, KPI definitions, and responsible interpretation of complaint data.
 
-## Questions Explored
+### 2. Complaint classification — Data Scientist / NLP
+[**Complaint Classification**](data-science-nlp-classifier/README.md) — structured classification workflow, synthetic pipeline demo, class-level evaluation outputs, and an optional historical narrative-text workflow where lawful data is available.
 
-- How do complaint volumes vary by product, issue, and time?
-- Which complaint categories are represented most heavily?
-- How can complaint text be prepared for supervised classification?
-- How does a traditional machine-learning baseline compare with transformer-based approaches?
-- Which evaluation measures help reveal class-level errors and potential routing risks?
+### 3. Retail customer intelligence — Data Scientist / Product Analyst
+[**Retail Customer Segmentation & Sales Forecasting**](data-science-project/README.md) — RFM feature engineering, K-Means segmentation, cohort and customer-value analysis, monthly revenue forecasting against a seasonal baseline, and business interpretation guidance.
 
-## Repository Projects
+### 4. Fraud risk analytics — Data Scientist / Risk Analytics
+[**Synthetic Fraud Risk Scoring**](fraud-risk-analytics/README.md) — reproducible transaction simulation, class-weighted Random Forest, ROC-AUC and PR-AUC evaluation, threshold trade-offs, and investigation queue outputs.
 
-### 0. Data Science — Retail Customer Intelligence
-- [**Retail Customer Segmentation & Sales Forecasting**](data-science-project/README.md) — RFM feature engineering, K-Means segmentation, SARIMA forecasting, and time-based model evaluation.
+**Important:** The fraud-risk project uses synthetic data. It demonstrates the workflow only; its metrics are not evidence of real-world fraud performance or production experience.
 
-### 1. NLP / Data Science
-- `banking-consumer-complaint-analysis.ipynb` — exploratory analysis, preprocessing, and modeling.
-- [`data-science-nlp-classifier/`](data-science-nlp-classifier/README.md) — structured complaint classifier and NLP experiments.
-- **Note:** CFPB stopped publishing narratives in the main database in 2026. Narrative-based work should use a properly sourced historical archive and respect data-use requirements.
+## Skills demonstrated
 
-### 2. Data Analyst / BI Analyst — Python + SQL + Power BI
-- [**CFPB Consumer Complaints Analytics Project**](portfolio-analyst-project/README.md) — a reproducible analyst workflow with Python data cleaning, SQL business queries, Power BI dashboard design and DAX measures.
+- **Python:** Pandas, NumPy, scikit-learn, data preparation, feature engineering
+- **SQL:** CTEs, aggregations, conditional logic, date trends, window functions
+- **BI:** Power BI, DAX, KPI design, dashboard specifications, drilldowns
+- **Machine learning:** classification, clustering, forecasting, model comparison, error analysis
+- **NLP / GenAI:** text preprocessing, TF-IDF baselines, transformer experiments, RAG concepts
+- **Risk analytics:** class imbalance, precision/recall trade-offs, threshold selection, human-in-the-loop review
 
-## Tools & Skills
+## Data and responsible use
 
-- **Python:** Pandas, NumPy
-- **SQL:** CTEs, aggregation, conditional logic, date trends, window functions
-- **BI:** Power BI, DAX, KPI design, drilldowns
-- **Visualization:** Plotly / Power BI
-- **Machine Learning:** scikit-learn, Logistic Regression, model evaluation
-- **NLP / deep learning:** PyTorch, Hugging Face Transformers, DistilBERT
+- CFPB complaint records are not a representative statistical sample of all consumers. Company complaint counts should be interpreted alongside company size or market share.
+- The retail transaction data and synthetic fraud data have distinct purposes and limitations; consult each project README before interpreting results.
+- Do not upload raw complaint exports, personal information, or restricted datasets.
+- Automated classifications and risk scores should support human review, not make final customer-impacting decisions.
+- Report numeric findings only after running the relevant workflow and checking the generated outputs.
 
-## Data Source
+## Reproducibility
 
-- [CFPB Consumer Complaint Database](https://www.consumerfinance.gov/data-research/consumer-complaints/)
-- [CFPB API documentation and release notes](https://cfpb.github.io/api/ccdb/)
-
-The CFPB dataset changes over time. The structured analytics project documents field handling and avoids committing raw complaint exports. Do not upload complaint-level data or personal information to GitHub.
-
-## Responsible Use
-
-- CFPB complaint records are not a representative statistical sample of all consumers.
-- Company complaint counts should be considered alongside company size or market share.
-- Automated complaint classification should support human review, not make final customer-impacting decisions.
-- Report model scores only after running the code and validating results on a documented split.
-
----
-Portfolio repository demonstrating analytics, SQL, BI reporting, and data science workflows.
+Each project README contains its own setup, data-source, run, and evaluation instructions. Generated artifacts are created locally and are not committed by default.
