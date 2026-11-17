@@ -1,0 +1,23 @@
+{
+  "data_type": "synthetic",
+  "rows": 30000,
+  "fraud_rate": 0.0266,
+  "roc_auc": 0.6808904128917427,
+  "average_precision_pr_auc": 0.07039110819591843,
+  "default_threshold_metrics": {
+    "threshold": 0.5,
+    "precision": 0.16666666666666666,
+    "recall": 0.005025125628140704,
+    "f1": 0.00975609756097561,
+    "flagged_rate": 0.0008
+  },
+  "threshold_analysis": [
+    {"threshold": 0.2, "precision": 0.11501597444089456, "recall": 0.18090452261306533, "f1": 0.140625, "flagged_rate": 0.04173333333333333},
+    {"threshold": 0.3, "precision": 0.13829787234042554, "recall": 0.06532663316582915, "f1": 0.08873720136518772, "flagged_rate": 0.012533333333333334},
+    {"threshold": 0.4, "precision": 0.17647058823529413, "recall": 0.01507537688442211, "f1": 0.027777777777777776, "flagged_rate": 0.002266666666666667},
+    {"threshold": 0.5, "precision": 0.16666666666666666, "recall": 0.005025125628140704, "f1": 0.00975609756097561, "flagged_rate": 0.0008},
+    {"threshold": 0.6, "precision": 0.0, "recall": 0.0, "f1": 0.0, "flagged_rate": 0.0},
+    {"threshold": 0.7, "precision": 0.0, "recall": 0.0, "f1": 0.0, "flagged_rate": 0.0}
+  ],
+  "note": "Synthetic benchmark only; not real-world fraud performance. Generated with seed 42 and the repository's run_pipeline.py workflow."
+}
