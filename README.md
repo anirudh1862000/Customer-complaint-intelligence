@@ -43,3 +43,6 @@ A portfolio repository demonstrating data analytics, business intelligence, mach
 ## Reproducibility
 
 Each project README contains its own setup, data-source, run, and evaluation instructions. Generated artifacts are created locally and are not committed by default.
+
+### 6. Customer Churn Prediction with XGBoost — Machine Learning
+[**Customer Churn Prediction with XGBoost**](customer-churn-xgboost/README.md) — reproducible synthetic-data ML demo with preprocessing, stratified holdout evaluation, ROC-AUC/precision/recall/F1, confusion matrix, test predictions, and feature importance. Metrics are explicitly labelled synthetic and are not real-world business results.
