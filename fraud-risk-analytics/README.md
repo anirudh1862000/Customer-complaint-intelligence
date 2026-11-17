@@ -35,22 +35,7 @@ Outputs are written to `outputs/` (created locally and not committed):
 - `confusion_matrix.csv`
 
 
-## Reference run (seed 42)
-
-A reference run of the checked-in pipeline with 30,000 generated rows and a stratified 75/25 split produced:
-
-| Metric | Result |
-|---|---:|
-| Synthetic fraud prevalence | 2.66% |
-| ROC-AUC | 0.681 |
-| Average precision (PR-AUC) | 0.070 |
-| Precision at threshold 0.20 | 11.50% |
-| Recall at threshold 0.20 | 18.09% |
-| Test records flagged at threshold 0.20 | 4.17% |
-
-At threshold 0.50, recall was only 0.50%, illustrating why a default threshold can miss most minority-class examples. The lower threshold catches more synthetic positives but creates more false positives. These figures are a reproducibility check on the synthetic generator, **not evidence of real fraud-detection capability**.
-
-The reference metrics are stored in [outputs/reference_run_metrics.json](outputs/reference_run_metrics.json). Re-run the command above to regenerate your own outputs. Minor differences may occur across library versions.
+> **Results status:** Run the command locally to generate `outputs/model_metrics.json`, `outputs/threshold_analysis.csv`, `outputs/scored_test_transactions.csv`, and `outputs/confusion_matrix.csv`. These generated outputs are not committed. Do not quote performance numbers until you have executed the pipeline and checked the resulting files. All results are synthetic and must not be presented as real-world fraud performance.
 
 ## Methodology
 
