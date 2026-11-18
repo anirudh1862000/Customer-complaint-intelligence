@@ -11,7 +11,10 @@ A portfolio repository demonstrating data analytics, business intelligence, mach
 - [Synthetic Fraud Risk Scoring](fraud-risk-analytics/README.md) — class-imbalance-aware risk scoring and threshold analysis.
 - [Document RAG Question Answering](rag-question-answering/README.md) — embeddings, FAISS retrieval, source references and FastAPI.
 - [Customer Churn Prediction with XGBoost](customer-churn-xgboost/README.md) — reproducible synthetic classification workflow.
-- [Time-Series Demand Forecasting](time-series-demand-forecasting/README.md) — synthetic monthly series, lag features, chronological holdout and seasonal-naive baseline.
+- [Time-Series Demand Forecasting](time-series-demand-forecasting/README.md) — synthetic monthly series, lag features, chronological holdout and seasonal-naive baseline ([Python implementation](time-series-demand-forecasting/src/forecast.py)).
+
+## GitHub profile
+A profile README draft is available in [PROFILE_README.md](PROFILE_README.md). To display it on the GitHub profile page, create a **public repository named exactly `anirudh1862000`** and place its contents in that repository's root `README.md`.
 
 ## Skills demonstrated
 Python, Pandas, NumPy, SQL, Power BI, DAX, EDA, data validation, classification, clustering, time-series feature engineering, NLP, RAG, model evaluation and responsible interpretation.
